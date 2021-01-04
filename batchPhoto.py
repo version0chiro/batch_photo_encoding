@@ -43,7 +43,7 @@ class Window(QDialog):
 
         self.number = QLineEdit()
         
-        # self.statusLabel = QLabel('')
+        self.statusLabel = QLabel('')
         
         # calling the method that create the form 
         self.createForm() 
@@ -92,14 +92,14 @@ class Window(QDialog):
     
     def startTraining(self):
         
-        # self.statusLabel.setText("Please wait...")
+        self.statusLabel.setText("Please wait...")
         time.sleep(2.0)
         time.sleep(3.0)
         checkFlag=trainModel()
-        # if checkFlag == 1:
-        #     self.statusLabel.setText("Training completed")
-        # else:
-        #     self.statusLabel.setText("Training failed, try again")
+        if checkFlag == 1:
+            self.statusLabel.setText("Training completed")
+        else:
+            self.statusLabel.setText("Training failed, try again")
             
         
     def clickPhoto(self):
