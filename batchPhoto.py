@@ -112,7 +112,7 @@ class Window(QDialog):
         elif self.camIP == "1":
             camIP =1
         else:
-            camIP = "http://"+str(url)+"/mjpeg/1"
+            camIP = "http://"+str(self.camIP)+"/mjpeg/1"
         
         print("pressed")
         name = self.name
