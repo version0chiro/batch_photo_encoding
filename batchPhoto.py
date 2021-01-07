@@ -130,39 +130,42 @@ class Window(QDialog):
             
         cap = cv2.VideoCapture(camIP)
         while(True):
-            # Capture frame-by-frame
-            ret, frame = cap.read()
-            key = cv2.waitKey(1)
-            
-            # frame = imutils.resize(frame,400,400)
-            
-            if key == ord('p'):
-                captureFlag=True
-                FrameCount=count
-            
-            if captureFlag==True:
-                cv2.imwrite(StoragePath+str(count-FrameCount)+'.png',frame)
-                FrameCount= FrameCount-1
-                
-                cv2.putText(frame,"Taking Pictures",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
-                
-                if FrameCount<1:
-                    break 
-            else:
-                cv2.putText(frame,"Press 'P' to take pictures" ,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+            if cap.grab():
+                # Capture frame-by-frame
+                ret, frame = cap.read(0)
+                frame = imutils.resize(frame,width=400,height=400)
 
-            
-            
-            # Our operations on the frame come here
-            # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+                key = cv2.waitKey(1)
+                
+                # frame = imutils.resize(frame,400,400)
+                
+                if key == ord('p'):
+                    captureFlag=True
+                    FrameCount=count
+                
+                if captureFlag==True:
+                    cv2.imwrite(StoragePath+str(count-FrameCount)+'.png',frame)
+                    FrameCount= FrameCount-1
+                    
+                    cv2.putText(frame,"Taking Pictures",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+                    
+                    if FrameCount<1:
+                        break 
+                else:
+                    cv2.putText(frame,"Press 'P' to take pictures" ,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
 
-            # Display the resulting frame
-            
-            cv2.imshow('frame',frame)
-            
-            
-            if FrameCount<1 or cv2.waitKey(1) & 0xFF == ord('q'):
-                break
+                
+                
+                # Our operations on the frame come here
+                # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
+                # Display the resulting frame
+                
+                cv2.imshow('frame',frame)
+                
+                
+                if FrameCount<1 or cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
 
         # When everything done, release the capture
         cap.release()
