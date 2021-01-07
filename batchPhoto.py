@@ -14,6 +14,7 @@ global name
 import imutils
 name = ''
 import time
+import pickle
 
 class Window(QDialog): 
   
@@ -104,9 +105,14 @@ class Window(QDialog):
         
     def clickPhoto(self):
         # self.statusLabel.setText("No Scan initalization")
+        pickelName = str(self.combo_box.currentText())
+        with open('saved_devices/'+str(pickelName)+'.pickle','rb') as f:
+            userDetails = pickle.load(f)
+            IP = userDetails.get('IP')
+        print(type(IP))
+        self.camIP = str(IP)
         self.name=self.nameLineEdit.text()
         count=int(self.number.text())
-        self.camIP = self.iPLineEdit.text()
         if self.camIP == "0":
             camIP=0
         elif self.camIP == "1":
@@ -147,12 +153,13 @@ class Window(QDialog):
                     cv2.imwrite(StoragePath+str(count-FrameCount)+'.png',frame)
                     FrameCount= FrameCount-1
                     
-                    cv2.putText(frame,"Taking Pictures",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+                    # cv2.putText(frame,"Taking Pictures",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
                     
                     if FrameCount<1:
                         break 
                 else:
-                    cv2.putText(frame,"Press 'P' to take pictures" ,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+                    pass
+                    # cv2.putText(frame,"Press 'P' to take pictures" ,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
 
                 
                 
@@ -207,13 +214,25 @@ class Window(QDialog):
   
         # adding rows 
         # for name and adding input text 
+        self.l1 =QLabel('Please select your camera from the list below', self)
+        layout.addRow(self.l1) 
+        self.l1.setAlignment(QtCore.Qt.AlignCenter) 
+        # creating a combo box widget 
+        self.combo_box = QComboBox(self) 
+  
+        for file in os.listdir("saved_devices/"):
+            if file.endswith(".pickle"):
+                self.combo_box.addItem(file.split('.')[0])
+                
+        layout.addRow(self.combo_box)
+        
         layout.addRow(QLabel("Name:"), self.nameLineEdit) 
   
         # for degree and adding combo box 
         # layout.addRow(QLabel("Email"), self.emailLineEdit) 
   
         # for age and adding spin box 
-        layout.addRow(QLabel("Camera-IP:"), self.iPLineEdit) 
+        # layout.addRow(QLabel("Camera-IP:"), self.iPLineEdit) 
   
         layout.addRow(QLabel("Number of photos:"), self.number)
         
