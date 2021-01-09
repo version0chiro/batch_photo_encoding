@@ -153,18 +153,17 @@ class Window(QDialog):
                     cv2.imwrite(StoragePath+str(count-FrameCount)+'.png',frame)
                     FrameCount= FrameCount-1
                     
-                    # cv2.putText(frame,"Taking Pictures",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+                    cv2.putText(frame,"Taking Pictures",(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
                     
                     if FrameCount<1:
                         break 
                 else:
                     pass
-                    # cv2.putText(frame,"Press 'P' to take pictures" ,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
+                    cv2.putText(frame,"Press 'P' to take pictures" ,(50,50),cv2.FONT_HERSHEY_SIMPLEX,1,(0,0,255),2,cv2.LINE_AA)
 
                 
                 
-                # Our operations on the frame come here
-                # gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+
 
                 # Display the resulting frame
                 
