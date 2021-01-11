@@ -139,7 +139,7 @@ class Window(QDialog):
             if cap.grab():
                 # Capture frame-by-frame
                 ret, frame = cap.read(0)
-                frame = imutils.resize(frame,width=400,height=400)
+                
 
                 key = cv2.waitKey(1)
                 
@@ -166,7 +166,7 @@ class Window(QDialog):
 
 
                 # Display the resulting frame
-                
+                frame = imutils.resize(frame,width=400,height=400)
                 cv2.imshow('frame',frame)
                 
                 
